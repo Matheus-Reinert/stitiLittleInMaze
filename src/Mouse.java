@@ -25,11 +25,11 @@ public class Mouse {
 
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[1].length; j++) {
-                if (maze[i][j].equals("E")){
+                if (maze[i][j].equals("S")){
                     originRow = i;
                     originColumn = j;
                 }
-                if (maze[i][j].equals("S")){
+                if (maze[i][j].equals("E")){
                     destineRow = i;
                     destColumn = j;
                 }
@@ -39,19 +39,52 @@ public class Mouse {
         result.put("originRow", originRow);
         result.put("originColumn", originColumn);
         result.put("destineRow", destineRow);
-        result.put("destColumn", destColumn);
+        result.put("destineColumn", destColumn);
 
         return result;
     }
 
-    private static void findWay(String[][] maze, int originRow, int originColumn) {
+    private static void findWay(String[][] maze, boolean[][] possibleMoves, int originRow, int originColumn, int destineRow, int destColumn) {
+        
         maze[originRow][originColumn] = "M";
+        int currentPositionOnRow = originRow, currentPositionOnColunm = originColumn;
         
-
-        
-
+        boolean isPossibleToWalk = walking(currentPositionOnRow, currentPositionOnColunm, possibleMoves, maze);
+        System.out.println(isPossibleToWalk);
+    
     }
     
+    private static boolean walking(int currentPositionOnRow, int currentPositionOnColunm, boolean [][]possibleMoves, String [][]maze) {
+             if(possibleMoves[currentPositionOnRow][currentPositionOnColunm] == true && maze[currentPositionOnRow][currentPositionOnColunm].equals("E")){
+                 return true;
+
+             } else if (possibleMoves[currentPositionOnRow - 1][currentPositionOnColunm] == true && !maze[currentPositionOnRow][currentPositionOnColunm].equals("M")) {
+
+                maze[currentPositionOnRow - 1][currentPositionOnColunm] = "M";
+                printMaze(maze);
+                walking(currentPositionOnRow -1, currentPositionOnColunm, possibleMoves, maze);
+
+             } else if (possibleMoves[currentPositionOnRow][currentPositionOnColunm - 1] == true && !maze[currentPositionOnRow][currentPositionOnColunm].equals("M")) {
+
+                maze[currentPositionOnRow][currentPositionOnColunm -1] = "M";
+                printMaze(maze);
+                walking(currentPositionOnRow, currentPositionOnColunm - 1, possibleMoves, maze);
+
+             } else if (possibleMoves[currentPositionOnRow + 1][currentPositionOnColunm] == true && !maze[currentPositionOnRow][currentPositionOnColunm].equals("M")) {
+
+                maze[currentPositionOnRow + 1][currentPositionOnColunm] = "M";
+                printMaze(maze);
+                walking(currentPositionOnRow + 1, currentPositionOnColunm, possibleMoves, maze);
+
+             } else if (possibleMoves[currentPositionOnRow][currentPositionOnColunm + 1] == true && !maze[currentPositionOnRow][currentPositionOnColunm].equals("M")) {
+
+                maze[currentPositionOnRow][currentPositionOnColunm + 1] = "M";
+                printMaze(maze);
+                walking(currentPositionOnRow, currentPositionOnColunm + 1, possibleMoves, maze);
+             }
+            return false;
+    }
+
     private static void printMaze(String maze[][]) {
         for(int i = 0; i < maze.length; i ++) {
             for(int j = 0; j < maze[1].length; j++){
@@ -81,13 +114,18 @@ public class Mouse {
     public static void main(String[] args) throws FileNotFoundException {
 
         String maze[][] = createMaze(); 
-        /* printMaze(maze);              
+        boolean possibleMoves[][];
+
+        printMaze(maze);              
         Map<String, Integer> rowsAndColumns = findRownsAndColunsToDescoveryStartAndExitPoint(maze);
         int originRow = rowsAndColumns.get("originRow");
-        int originColumn = rowsAndColumns.get("originColumn"); */
-        discoveryPossibleMoves(maze);
+        int destineRow = rowsAndColumns.get("destineRow");
+        int originColumn = rowsAndColumns.get("originColumn");
+        int destColumn = rowsAndColumns.get("destineColumn");
+        
+        possibleMoves = discoveryPossibleMoves(maze);
 
-        /* findWay(maze, originRow, originColumn); */
+        findWay(maze, possibleMoves, originRow, originColumn, destineRow, destColumn);
         
       /*   int originRow = rowsAndColumns.get("originRow");
         int originColumn = rowsAndColumns.get("originColumn");
