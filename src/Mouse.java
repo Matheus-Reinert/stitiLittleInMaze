@@ -58,25 +58,25 @@ public class Mouse {
              if(possibleMoves[currentPositionOnRow][currentPositionOnColunm] == true && maze[currentPositionOnRow][currentPositionOnColunm].equals("E")){
                  return true;
 
-             } else if (possibleMoves[currentPositionOnRow - 1][currentPositionOnColunm] == true && !maze[currentPositionOnRow][currentPositionOnColunm].equals("M")) {
+             } else if (possibleMoves[currentPositionOnRow - 1][currentPositionOnColunm] == true && !maze[currentPositionOnRow -1][currentPositionOnColunm].equals("M")) {
 
                 maze[currentPositionOnRow - 1][currentPositionOnColunm] = "M";
                 printMaze(maze);
                 walking(currentPositionOnRow -1, currentPositionOnColunm, possibleMoves, maze);
 
-             } else if (possibleMoves[currentPositionOnRow][currentPositionOnColunm - 1] == true && !maze[currentPositionOnRow][currentPositionOnColunm].equals("M")) {
+             } else if (possibleMoves[currentPositionOnRow][currentPositionOnColunm - 1] == true && !maze[currentPositionOnRow][currentPositionOnColunm -1].equals("M")) {
 
                 maze[currentPositionOnRow][currentPositionOnColunm -1] = "M";
                 printMaze(maze);
                 walking(currentPositionOnRow, currentPositionOnColunm - 1, possibleMoves, maze);
 
-             } else if (possibleMoves[currentPositionOnRow + 1][currentPositionOnColunm] == true && !maze[currentPositionOnRow][currentPositionOnColunm].equals("M")) {
+             } else if (possibleMoves[currentPositionOnRow + 1][currentPositionOnColunm] == true && !maze[currentPositionOnRow + 1][currentPositionOnColunm].equals("M")) {
 
                 maze[currentPositionOnRow + 1][currentPositionOnColunm] = "M";
                 printMaze(maze);
                 walking(currentPositionOnRow + 1, currentPositionOnColunm, possibleMoves, maze);
 
-             } else if (possibleMoves[currentPositionOnRow][currentPositionOnColunm + 1] == true && !maze[currentPositionOnRow][currentPositionOnColunm].equals("M")) {
+             } else if (possibleMoves[currentPositionOnRow][currentPositionOnColunm + 1] == true && !maze[currentPositionOnRow][currentPositionOnColunm + 1].equals("M")) {
 
                 maze[currentPositionOnRow][currentPositionOnColunm + 1] = "M";
                 printMaze(maze);
